@@ -27,9 +27,13 @@ async function removeContact(contactId) {
   try {
     const data = await fs.readFile(contactsPath, 'utf-8');
     const contacts = JSON.parse(data);
+    
     const updatedContacts = contacts.filter(contact => contact.id !== contactId);
+    
     await fs.writeFile(contactsPath, JSON.stringify(updatedContacts, null, 2));
-    return updatedContacts.find(contact => contact.id === contactId) || null;
+    
+    const removedContact = contacts.find(contact => contact.id === contactId);
+    return removedContact || null;
   } catch (error) {
     return null;
   }
